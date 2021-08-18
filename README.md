@@ -2,10 +2,10 @@
 
 Operations :
 
-**Add candidates.**
-**Give a vote to candidates.**
-**Generate report of candidates and their votes.**
-**Display one candidate as a winner who has highest votes.** 
+**Add candidates.**  
+**Give a vote to candidates.**  
+**Generate report of candidates and their votes.**  
+**Display one candidate as a winner who has highest votes.**   
 
 Goal : To keep presentation layer and business layer seperate.
 
