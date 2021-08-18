@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vote</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    function vote() {
+      let voter_id = document.querySelector(".voter_id").value;
+      let candidate = document.querySelector('input[name="candidate"]:checked').value;
+      console.log(voter_id);
+      console.log(candidate);
+      fetch("/voting", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ "candidate": candidate, "voter": voter_id })
+      })
+        .then(res => res.json())
+        .then(res => {
+          if (res.result == "ok") {
+            alert("vote casted");
+          }
+          else {
+            alert("u have voted already ");
+          }
+        })
+        .catch(err => { alert(err) });
+    }
+    window.onload = () => {
+      var choice = document.querySelector(".choice");
+      document.querySelector(".submit_vote").addEventListener("click", vote);
+      //get the candidate list
+      fetch("/getcandidates")
+        .then(res => res.json())
+        .then(res => {
+          for (let text of res.candidates) {
+            let radio = document.createElement("input");
+            radio.type = 'radio';
+            radio.name = 'candidate';
+            radio.value = text;
+            let lable = document.createElement("lable");
+            lable.id = "lable";
+            lable.innerHTML = text;
+            choice.appendChild(radio);
+            choice.appendChild(lable);
+          }
+        })
+        .catch(err => { alert(err) });
+    };
+
+  </script>
+</head>
+
+<body>
+  <div class="main_home">
+    <ul>
+      <li>
+        <a href="add_candidate.html">Add Candidates</a>
+      </li>
+      <li>
+        <a href="#">Vote</a>
+      </li>
+      <li>
+        <a href="result.html">Poll Result</a>
+      </li>
+      <li>
+        <a href="report.html">Report</a>
+      </li>
+    </ul>
+  </div>
+  <div class="main_vote">
+    <form class="form_vote">
+      <h2> Give Your Vote </h2>
+      <input type="text" class="voter_id" placeholder="Enter your id" />
+      <br /><br />
+      <div class="choice">
+
+      </div>
+      <input type="button" class="submit_vote" value="submit" />
+    </form>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Result</title>
+  <link rel="stylesheet" href="style.css">
+  <meta charset=“UTF-8”>
+  <script>
+
+    window.onload = () => {
+      fetch("/gettotalcount")
+        .then(res => res.json())
+        .then(res => {
+          let first = "NONE";
+          let vote = 0;
+          res.votes["NONE"] = -1;
+          for (let c in res.votes) {
+            if (res.votes[c] > res.votes[first]) {
+              first = c;
+              vote = res.votes[c];
+            }
+          }
+          var body = document.getElementsByTagName("body")[0];
+          var tbl = document.createElement("table");
+          var tblBody = document.createElement("tbody");
+
+          var row1 = document.createElement("tr");
+
+          var th1 = document.createElement("th");
+          var cellText = document.createTextNode("Name");
+          th1.appendChild(cellText);
+          row1.appendChild(th1);
+
+          var th2 = document.createElement("th");
+          var cellText = document.createTextNode("Votes");
+          th2.appendChild(cellText);
+          row1.appendChild(th2);
+          tblBody.appendChild(row1);
+
+          var row = document.createElement("tr");
+
+          var cell1 = document.createElement("td");
+          var cellText = document.createTextNode(first);
+          cell1.appendChild(cellText);
+          row.appendChild(cell1);
+
+          var cell2 = document.createElement("td");
+          var cellText = document.createTextNode(vote);
+          cell2.appendChild(cellText);
+          row.appendChild(cell2);
+          tblBody.appendChild(row);
+
+          tbl.appendChild(tblBody);
+          body.appendChild(tbl);
+          tbl.setAttribute("border", "1");
+
+        })
+        .catch(err => { alert(err) });
+    };
+  </script>
+</head>
+
+<body>
+  <div class="main_home">
+    <ul>
+      <li>
+        <a href="add_candidate.html">Add Candidates</a>
+      </li>
+      <li>
+        <a href="vote.html">Vote</a>
+      </li>
+      <li>
+        <a href="#">Poll Result</a>
+      </li>
+      <li>
+        <a href="report.html">Report</a>
+      </li>
+    </ul>
+  </div>
+  <div class="main_result">
+    <h2> &#x1f973; Congratulations &#x1f973;</h2>
+
+  </div>
+</body>
+
+</html>
